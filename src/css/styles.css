@@ -10,4 +10,257 @@
 @import url('./container.css');
 @import url('./animations.css');
 
+/* Sections style 
+@import url('./header.css');
+@import url('./vite-promo.css');
+@import url('./badges.css');
+@import url('./back-link.css');
+@import url('./footer.css');*/
+
+/* ======== стилізація поля пошуку ======== */
+
+.search-image-form {
+  margin-top: 36px;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+input {
+  padding: 0;
+}
+
+input[type='text' i] {
+  padding-block: 0;
+  padding-inline: 0;
+}
+.search-field {
+  box-sizing: border-box;
+  display: flex;
+  width: 272px;
+  height: 40px;
+  border-radius: 4px;
+  border: 1px solid #808080;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.64px;
+}
+
+.search-field:hover {
+  border-color: #000000;
+}
+
+input.search-field[name='field']:focus-visible {
+  border: 1px solid #4e75ff !important;
+  outline: none !important; /* видаляємо стандартний контур */
+}
+
+input.search-field[name='field']:active {
+  border: 1px solid #4e75ff !important;
+}
+
+input.search-field[name='field'] {
+  padding: 0 0 0 16px;
+}
+
+input.search-field::placeholder {
+  color: #808080;
+}
+/* ======== стилізація кнопки ======== */
+.submit-button {
+  display: inline-flex;
+  padding: 8px 16px;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 8px;
+  background: #4e75ff;
+  border: none;
+
+  color: #fff;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.64px;
+}
+
+.submit-button:hover {
+  background: #6c8cff;
+}
+
+/* ======== стилізація галереї зображень ======== */
+.gallery {
+position: relative;
+  justify-content: space-between;
+  display: flex;
+  flex-wrap: wrap;
+  width: 1440px;
+  height: 696px;
+  margin: 0 auto;
+  padding: 24px 156px;
+  column-gap: 24px;
+  row-gap: 24px;
+  margin-block-start: 0 !important;
+ }
+
+li {
+  box-sizing: border-box;
+  position: relative;
+  width: calc(100% / 3 - 16px); 
+  height: 200px; 
+  overflow: hidden;
+  border: 1px solid #808080;
+}
+
+.gallery-info {
+  position: absolute;
+  top: 151px;
+  left: 0;
+  width: 100%;
+  height: 48px;
+  padding: 0 25px 0 20px;
+  display: flex;
+  background-color: #ffffff;
+  text-align: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  font-family: Montserrat;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 2;
+  letter-spacing: 0.48px;
+
+}
+:root {
+  font-synthesis:weight !important;
+}
+
+.gallery-info-item {
+  display:flex;
+  flex-direction: column;
+  margin: 0 !important;
+  color: #2E2F42;
+  
+}
+
+.basicLightbox {
+  background-color: rgba(46, 47, 66, 0.8);
+}
+
+.basicLightbox__placeholder img.modal-image:first-child:last-child {
+  width: 1112px !important;
+  height: 640px !important;
+  object-fit: cover;
+  margin: auto;
+}
+
+/* ======== стилізація повідомлення про помилку ======== */
+
+.iziToast {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center;
+  padding: 0 !important;
+  height: auto !important;
+  margin: 0 !important;
+  width: 432px !important;
+}
+
+.iziToast.iziToast-color-red {
+  /*border-color: #ef4040 !important;*/
+  background: #ef4040 !important;
+  border-radius: 4px !important;
+}
+
+.iziToast-body {
+  box-sizing: border-box;
+  min-height: 1px !important;
+  padding: 20px 62px 20px 52px !important;
+  margin: 0 !important;
+  border-radius: 4px !important;
+}
+
+.iziToast-texts {
+  margin: 0 !important;
+  padding-right: 0 !important;
+}
+
+.iziToast-message {
+  margin: 0 !important;
+  color: #fafafb !important;
+  font-family: Montserrat !important;
+  font-size: 16px !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  line-height: 1.5 !important;
+  letter-spacing: 0.5px !important;
+}
+
+.error-toast {
+  display: inline-flex;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+/* стилізація слова Error 
+:root {
+  font-synthesis: weight;
+}*/
+.iziToast-message.slideIn .error-toast .title {
+  font-weight: 700 !important;
+}
+
+/* додавання іконок */
+.iziToast-icon {
+  background: url('../img/bi_x-octagon.svg') no-repeat 50% 50% !important;
+  margin-left: 20px !important;
+}
+.iziToast-close {
+  background: url('../img/bi_x-lg.svg') no-repeat 50% 50% !important;
+  border: none !important;
+  cursor: pointer !important;
+  opacity: 1 !important;
+  /*background-size: 30% !important;*/
+}
+
+/* ==== стилізація прогрес-бару ==== */
+.error-toast .iziToast-progressbar {
+  background: #ffbebe !important;
+  border-radius: 0 0 4px 4px !important;
+}
+
+
+.loader {
+  position: absolute;
+    top: 50%;
+    left: 50%;
+  z-index: 1050;
+  width: 48px;
+  height: 48px;
+  border: 5px solid #000000;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+  background-color: rgba(255, 0, 0, 0.3);
+display: none;
+  transform: translate(-50%, -50%);
+  }
+
+  @keyframes rotation {
+  0% {
+      transform: rotate(0deg);
+  }
+  100% {
+      transform: rotate(360deg);
+  }
+  } 
+
 
