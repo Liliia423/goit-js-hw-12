@@ -1,9 +1,11 @@
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 import { requestSending } from './js/pixabay-api';
-import { markupSearchForm, renderGallery } from './js/render-functions';
+import { markupSearchForm, renderGallery, markupLoadButton } from './js/render-functions';
+import axios from 'axios';
 
 markupSearchForm();
+markupLoadButton();
 
 const searchForm = document.querySelector('.search-image-form');
 const searchField = document.querySelector('.search-field');
@@ -11,6 +13,7 @@ const gallery = document.querySelector('.gallery');
 
 const loader = document.querySelector('.loader');
 
+  /*======== http request version 1  ========*/
 /*searchForm.addEventListener('submit', async (event) => {
   event.preventDefault(); 
   const query = searchField.value.trim();
@@ -45,7 +48,7 @@ const loader = document.querySelector('.loader');
   searchField.value = ''; 
 });*/
 
-/*======== варіант без await ========*/
+/*======== http request version 2 ========*/
 searchForm.addEventListener('submit', (event) => {
   event.preventDefault(); 
   const query = searchField.value.trim();
@@ -55,10 +58,38 @@ searchForm.addEventListener('submit', (event) => {
   }
 
   showLoader();
-
   requestSending(query)
+  .then((data) => {
+    if (data.hits.length === 0) {
+      gallery.innerHTML = '';  
+      throw new Error('No results found'); 
+    }
+
+    gallery.innerHTML = '';
+    renderGallery(data.hits);
+    hideLoader();
+  })
+  .catch((error) => {
+    console.log(error.message); 
+
+    iziToast.error({
+      message: 'Sorry, there are no images matching your search query. Please try again.',
+      position: 'topRight',
+      class: 'error-toast',
+      timeout: 4000,
+    });
+
+    hideLoader(); // 
+  })
+  .finally(() => {
+    searchField.value = ''; 
+  });
+
+  /*======== http request version 3 ========*/
+  /*requestSending(query)
     .then((data) => {
       if (data.hits.length === 0) {
+        gallery.innerHTML = '';       
         iziToast.error({
           message: 'Sorry, there are no images matching your search query. Please try again.',
           position: 'topRight',
@@ -68,24 +99,18 @@ searchForm.addEventListener('submit', (event) => {
         hideLoader(); 
         return;
       }
-
       gallery.innerHTML = ''; 
       renderGallery(data.hits); 
       hideLoader();
     })
+
     .catch((error) => {
-      console.log(error); 
-      iziToast.error({
-        message: 'Error. Try entering the correct word!',
-        position: 'topRight',
-        class: 'error-toast',
-        timeout: 4000,
-      });
+      console.log('Error. Try entering the correct word!');  
       hideLoader(); 
     })
     .finally(() => {
       searchField.value = ''; 
-    });
+    });*/
 });
 
 

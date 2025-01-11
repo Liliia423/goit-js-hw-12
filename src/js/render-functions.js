@@ -44,11 +44,21 @@ export function renderGallery(images) {
 
   gallery.insertAdjacentHTML('beforeend', markup);
 
-  // Ініціалізація SimpleLightbox або оновлення галереї
+  // SimpleLightbox initialization or gallery update
   const lightbox = new SimpleLightbox('.gallery a', {
     captionsData: 'alt',
     captionDelay: 250,
   });
 
   lightbox.refresh();
+}
+
+export function markupLoadButton(){
+  const gallery = document.querySelector('.gallery');
+  const tegLoadButton = document.createElement('button');
+  tegLoadButton.textContent = 'Load more';
+  tegLoadButton.type = 'submit';
+  tegLoadButton.className = 'submit-button load-more-button'; 
+
+  gallery.insertAdjacentElement('afterend', tegLoadButton);
 }
