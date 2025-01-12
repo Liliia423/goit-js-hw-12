@@ -97,7 +97,7 @@ input.search-field::placeholder {
 
 /* ======== image gallery styling ======== */
 .gallery {
-position: relative;
+  position: relative;
   justify-content: space-between;
   display: flex;
   flex-wrap: wrap;
@@ -217,7 +217,6 @@ li {
   border: none !important;
   cursor: pointer !important;
   opacity: 1 !important;
- 
 }
 
 /* ==== progress bar styling ==== */
@@ -228,7 +227,7 @@ li {
 
 /* ==== loader icon styling ==== */
 .loader {
-  position: absolute;
+  position: relative;
     top: 50%;
     left: 50%;
   z-index: 1050;

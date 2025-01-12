@@ -12,7 +12,7 @@ const searchForm = document.querySelector('.search-image-form');
 const searchField = document.querySelector('.search-field');
 const gallery = document.querySelector('.gallery');
 const loader = document.querySelector('.loader');
-const maxPages = 2; 
+const maxPages = 5; 
 
 let page = 1; 
 let currentQuery = ''; 
@@ -39,70 +39,19 @@ function hideLoadMoreButton() {
   }
 }
 
-/*======================================================
-========================================================*/
-
-/*searchForm.addEventListener('submit', async (event) => {
-  event.preventDefault();
-  const query = searchField.value.trim();
-
-  if (!query) {
-    return;
-  }
-
-  currentQuery = query; 
-  page = 1; 
-  gallery.innerHTML = ''; 
-  hideLoadMoreButton(); 
-
-  try {
-    const data = await requestSending(query, page); 
-    if (data.hits.length === 0) {
-      throw new Error('No results found');
-    }
-
-    renderGallery(data.hits);
-    if (data.totalHits > 15) {
-      showLoadMoreButton(); 
-    }
-  } catch (error) {
-    console.error(error.message);
-    iziToast.error({
-      message: 'Sorry, there are no images matching your search query. Please try again.',
-      position: 'topRight',
-      class: 'error-toast',
-      timeout: 4000,
+function scrollToNextPage() {
+  const galleryItem = document.querySelector('.gallery li'); 
+ 
+  if (galleryItem) {
+    const itemHeight = galleryItem.getBoundingClientRect().height; 
+    const scrollHeight = 2 * itemHeight; 
+    window.scrollBy({
+      top: scrollHeight,
+      behavior: 'smooth', 
     });
-  } finally {
-    hideLoader();
-    searchField.value = '';
   }
-});
+}
 
-const loadMoreButton = document.querySelector('.load-more-button');
-
-loadMoreButton.addEventListener('click', async () => {
-  page += 1; 
-  showLoader();
-
-  try {
-    const data = await requestSending(currentQuery, page);
-    renderGallery(data.hits); 
-    if (page * 15 >= data.totalHits) {
-      hideLoadMoreButton(); 
-    }
-  } catch (error) {
-    console.error(error.message);
-    iziToast.error({
-      message: 'Failed to load more images. Please try again.',
-      position: 'topRight',
-      class: 'error-toast',
-      timeout: 4000,
-    });
-  } finally {
-    hideLoader();
-  }
-});*/
 
 searchForm.addEventListener('submit', async (event) => {
   event.preventDefault();
@@ -123,8 +72,9 @@ searchForm.addEventListener('submit', async (event) => {
     if (data.hits.length === 0) {
       throw new Error('No results found');
     }
-
+ 
     renderGallery(data.hits);
+    scrollToNextPage(); 
 
     if (data.totalHits > page * 15) {
       showLoadMoreButton();
@@ -170,6 +120,14 @@ loadMoreButton.addEventListener('click', async () => {
   try {
     const data = await requestSending(currentQuery, page);
     renderGallery(data.hits);
+    //loader check
+    /*const data = await new Promise((resolve) => {
+      setTimeout(async () => {
+        const result = await requestSending(currentQuery, page);
+        resolve(result);
+      }, 3000); 
+    });
+    renderGallery(data.hits);*/
 
     if (data.totalHits <= page * 15 || page >= maxPages) {
       hideLoadMoreButton();
@@ -194,35 +152,3 @@ loadMoreButton.addEventListener('click', async () => {
   }
 });
 
-/*loadMoreButton.addEventListener('click', async () => {
-  page += 1;
-  showLoader();
-  hideLoadMoreButton();
-
-  try {
-    const data = await requestSending(currentQuery, page);
-    renderGallery(data.hits);
-
-    // Перевірка на кінець колекції
-    if (data.totalHits <= page * 15) {
-      hideLoadMoreButton();
-      iziToast.info({
-        message: "We're sorry, but you've reached the end of search results.",
-        position: 'topRight',
-        class: 'info-toast',
-        timeout: 4000,
-      });
-    } else {
-      showLoadMoreButton();
-    }
-  } catch (error) {
-    iziToast.error({
-      message: 'An error occurred while loading more images. Please try again.',
-      position: 'topRight',
-      class: 'error-toast',
-      timeout: 4000,
-    });
-  } finally {
-    hideLoader();
-  }
-});*/
