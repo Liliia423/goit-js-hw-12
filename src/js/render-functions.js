@@ -44,7 +44,6 @@ export function renderGallery(images) {
 
   gallery.insertAdjacentHTML('beforeend', markup);
 
-  // SimpleLightbox initialization or gallery update
   const lightbox = new SimpleLightbox('.gallery a', {
     captionsData: 'alt',
     captionDelay: 250,
@@ -53,12 +52,23 @@ export function renderGallery(images) {
   lightbox.refresh();
 }
 
-export function markupLoadButton(){
+export function markupLoadButton() {
   const gallery = document.querySelector('.gallery');
-  const tegLoadButton = document.createElement('button');
-  tegLoadButton.textContent = 'Load more';
-  tegLoadButton.type = 'submit';
-  tegLoadButton.className = 'submit-button load-more-button'; 
 
-  gallery.insertAdjacentElement('afterend', tegLoadButton);
+  const loadMoreButton = document.createElement('button');
+  loadMoreButton.textContent = 'Load more';
+  loadMoreButton.type = 'button'; 
+  loadMoreButton.className = 'submit-button load-more-button';
+  loadMoreButton.style.display = 'none'; 
+
+  const loader = document.createElement('div');
+  loader.className = 'loader';
+  loader.style.display = 'none'; 
+
+  gallery.insertAdjacentElement('afterend', loadMoreButton);
+  
+  loadMoreButton.insertAdjacentElement('afterend', loader);
 }
+
+ 
+ 

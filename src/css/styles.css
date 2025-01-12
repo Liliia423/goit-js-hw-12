@@ -88,10 +88,10 @@ input.search-field::placeholder {
 
 .load-more-button {
   display: block;
- 
   margin: 0 auto;
   text-align: center;
   margin-top: 32px;
+  margin-bottom: 16px;
 }
 
 
@@ -241,7 +241,7 @@ li {
   box-sizing: border-box;
   animation: rotation 1s linear infinite;
   background-color: rgba(76, 165, 234, 0.3);
-display: none;
+  display: none;
   transform: translate(-50%, -50%);
   }
 
