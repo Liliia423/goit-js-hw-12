@@ -60,7 +60,7 @@ function scrollToNextPage() {
         top: 2 * itemHeight,
         behavior: 'smooth',
       });
-    }, 100); 
+    }, 10); 
   } else {
     console.warn('No gallery items found for scrolling.');
   }
@@ -97,7 +97,7 @@ searchForm.addEventListener('submit', async (event) => {
     setTimeout(() => {
       /*console.log('Calling scrollToNextPage...');*/
       scrollToNextPage(); 
-}, 100); 
+}, 10); 
 
     if (data.totalHits > page * 15) {
       showLoadMoreButton();
@@ -137,7 +137,7 @@ loadMoreButton.addEventListener('click', async () => {
 
     setTimeout(() => {
       scrollToNextPage(); 
-    }, 300);
+    }, 10);
 
     const loadedImages = page * 15; 
     if (loadedImages >= data.totalHits) {
