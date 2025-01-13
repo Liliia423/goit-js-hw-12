@@ -178,6 +178,11 @@ li {
   border-radius: 4px !important;
 }
 
+.iziToast.iziToast-color-blue {
+  background: #ffa000 !important;
+  border-radius: 4px !important;
+}
+
 .iziToast-body {
   box-sizing: border-box;
   min-height: 1px !important;
@@ -210,6 +215,11 @@ li {
 
 .iziToast-icon {
   background: url('../img/bi_x-octagon.svg') no-repeat 50% 50% !important;
+  margin-left: 20px !important;
+}
+
+.ico-info {
+  background: url('../img/bi_exclamation-triangle.svg') no-repeat 50% 50% !important;
   margin-left: 20px !important;
 }
 .iziToast-close {

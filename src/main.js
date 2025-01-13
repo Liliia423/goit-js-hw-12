@@ -12,7 +12,6 @@ const searchForm = document.querySelector('.search-image-form');
 const searchField = document.querySelector('.search-field');
 const gallery = document.querySelector('.gallery');
 const loader = document.querySelector('.loader');
-const maxPages = 5; 
 
 let page = 1; 
 let currentQuery = ''; 
@@ -39,18 +38,37 @@ function hideLoadMoreButton() {
   }
 }
 
-function scrollToNextPage() {
+/*========page-scrolling-start========*/
+
+function getCardHeight() {
   const galleryItem = document.querySelector('.gallery li'); 
- 
+  if (galleryItem) {
+    return galleryItem.getBoundingClientRect().height; 
+  }
+  console.warn('No gallery items found!');
+  return 0; 
+}
+
+function scrollToNextPage() {
+  const galleryItem = document.querySelector('.gallery li');
   if (galleryItem) {
     const itemHeight = galleryItem.getBoundingClientRect().height; 
-    const scrollHeight = 2 * itemHeight; 
-    window.scrollBy({
-      top: scrollHeight,
-      behavior: 'smooth', 
-    });
+    /*console.log('Item height:', itemHeight);*/
+    
+    setTimeout(() => {
+      window.scrollBy({
+        top: 2 * itemHeight,
+        behavior: 'smooth',
+      });
+    }, 100); 
+  } else {
+    console.warn('No gallery items found for scrolling.');
   }
 }
+
+
+
+/*========page-scrolling-end========*/
 
 
 searchForm.addEventListener('submit', async (event) => {
@@ -64,6 +82,7 @@ searchForm.addEventListener('submit', async (event) => {
   currentQuery = query;
   page = 1; 
   gallery.innerHTML = '';
+
   hideLoadMoreButton();
   showLoader();
 
@@ -74,7 +93,11 @@ searchForm.addEventListener('submit', async (event) => {
     }
  
     renderGallery(data.hits);
-    scrollToNextPage(); 
+    getCardHeight()
+    setTimeout(() => {
+      /*console.log('Calling scrollToNextPage...');*/
+      scrollToNextPage(); 
+}, 100); 
 
     if (data.totalHits > page * 15) {
       showLoadMoreButton();
@@ -100,43 +123,31 @@ searchForm.addEventListener('submit', async (event) => {
   searchField.value = '';
 });
 
+/*========load-more-button========*/
 const loadMoreButton = document.querySelector('.load-more-button');
-loadMoreButton.addEventListener('click', async () => {
-  if (page >= maxPages) {
-    hideLoadMoreButton();
-    iziToast.info({
-      message: "We're sorry, but you've reached the end of search results (test mode).",
-      position: 'topRight',
-      class: 'info-toast',
-      timeout: 4000,
-    });
-    return;
-  }
 
-  page += 1;
+loadMoreButton.addEventListener('click', async () => {
+  page += 1; 
   showLoader();
   hideLoadMoreButton();
 
   try {
     const data = await requestSending(currentQuery, page);
     renderGallery(data.hits);
-    //loader check
-    /*const data = await new Promise((resolve) => {
-      setTimeout(async () => {
-        const result = await requestSending(currentQuery, page);
-        resolve(result);
-      }, 3000); 
-    });
-    renderGallery(data.hits);*/
 
-    if (data.totalHits <= page * 15 || page >= maxPages) {
-      hideLoadMoreButton();
+    setTimeout(() => {
+      scrollToNextPage(); 
+    }, 300);
+
+    const loadedImages = page * 15; 
+    if (loadedImages >= data.totalHits) {
       iziToast.info({
         message: "We're sorry, but you've reached the end of search results.",
         position: 'topRight',
         class: 'info-toast',
         timeout: 4000,
       });
+      hideLoadMoreButton(); 
     } else {
       showLoadMoreButton();
     }
@@ -151,4 +162,14 @@ loadMoreButton.addEventListener('click', async () => {
     hideLoader();
   }
 });
+
+
+//loader check
+    /*const data = await new Promise((resolve) => {
+      setTimeout(async () => {
+        const result = await requestSending(currentQuery, page);
+        resolve(result);
+      }, 3000); 
+    });
+    renderGallery(data.hits);*/
 
